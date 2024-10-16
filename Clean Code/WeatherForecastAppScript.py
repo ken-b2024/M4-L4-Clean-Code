@@ -1,23 +1,18 @@
 class WeatherDataFetcher:
-    def fetch_weather_data(city):
-    # Simulated function to fetch weather data for a given city
-        print(f"Fetching weather data for {city}...")
-    # Simulated data based on city
-        weather_data = {
+    def __init__(self):
+        self.weather_data = {
             "New York": {"temperature": 70, "condition": "Sunny", "humidity": 50, "city": "New York"},
             "London": {"temperature": 60, "condition": "Cloudy", "humidity": 65, "city": "London"},
             "Tokyo": {"temperature": 75, "condition": "Rainy", "humidity": 70, "city": "Tokyo"}
         }
-        return weather_data.get(city, {})
-    
-    def get_detailed_forecast(self,city):
-    # Function to provide a detailed weather forecast for a city
-        data = self.fetch_weather_data(city)
-        return self.parse_weather_data(data)
+
+    def fetch_weather_data(self,city):
+        print(f"Fetching weather data for {city}...")
+        return self.weather_data.get(city, {})
     
 class DataParser:
+    @staticmethod
     def parse_weather_data(data):
-    # Function to parse weather data
         if not data:
             return "Weather data not available"
         city = data["city"]
@@ -32,12 +27,10 @@ class AppInterface:
         self.fetch_data = WeatherDataFetcher()
 
     def get_detailed_forecast(self,city):
-        # Function to provide a detailed weather forecast for a city
-        data = self.fetch_data(city)
-        return self.parse_data(data)
+        data = self.fetch_data.fetch_weather_data(city)
+        return self.parse_data.parse_weather_data(data)
     
     def display_weather(self,city):
-        # Function to display the basic weather forecast for a city
         data = self.fetch_data(city)
         if not data:
             print(f"Weather data not available for {city}")
@@ -57,5 +50,6 @@ class AppInterface:
                 forecast = self.display_weather(city)
             print(forecast)
 
-# if __name__ == "__main__":
-AppInterface.main()
+if __name__ == "__main__":
+    app = AppInterface()
+    app.main()
